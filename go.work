@@ -1,0 +1,10 @@
+go 1.21.9
+
+use(
+ ordersvc
+ usrsvc
+ skusvc
+ dogapm
+ dogalarm
+ proto
+)

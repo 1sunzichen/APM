@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  immocmysql:
+    image: mysql:latest
+    platform: linux/x86_64
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+ 
+  imoocredis:
+    image: redis:latest
+    platform: linux/x86_64
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+ 
+volumes:
+  mysql_data:
+  redis_data:
