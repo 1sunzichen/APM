@@ -8,7 +8,7 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-// infrastructure 基础措施
+// infrastructure foundation layer
 type infra struct {
 	Db  *sql.DB
 	Rdb *redis.Client

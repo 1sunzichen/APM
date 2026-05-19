@@ -13,9 +13,9 @@ type GrpcClient struct {
 
 func NewGrpcClient(addr string) *GrpcClient {
 	conn, err := grpc.Dial(addr,
-		//拦截器
+		// interceptor
 		grpc.WithUnaryInterceptor(unaryInterceptor()),
-		//签名
+		// transport credentials
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 
 	if err != nil {

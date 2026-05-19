@@ -23,21 +23,21 @@ func (o *order) Add(w http.ResponseWriter, r *http.Request) {
 		skuid, _ = strconv.Atoi(value.Get("skuid"))
 		num, _   = strconv.Atoi(value.Get("num"))
 	)
-	//检查用户信息
+	// verify user info
 	_, err := grpclient.UserClient.GetUser(context.TODO(), &protos.User{Id: int64(uid)})
 	if err != nil {
 		dogapm.Logger.Error(context.TODO(), "add order", map[string]interface{}{"err": err.Error(), "uid": uid, "skuid": skuid, "num": num})
 		dogapm.HttpStatus.Error(w, err.Error(), nil)
 		return
 	}
-	//对库存进行扣减
+	// deduct inventory
 	skuMsg, err := grpclient.SkuClient.DecreaseStock(context.TODO(), &protos.Sku{Id: int64(skuid), Num: int32(num)})
 	if err != nil {
 		dogapm.Logger.Error(context.TODO(), "add order", map[string]interface{}{"err": err.Error(), "uid": uid, "skuid": skuid, "num": num})
 		dogapm.HttpStatus.Error(w, err.Error(), nil)
 		return
 	}
-	//创建订单
+	// create order
 	_, err = dogapm.Infra.Db.ExecContext(context.TODO(), "insert into t_order(order_id,sku_id,num,price,uid) values(?,?,?,?,?)", uuid.New().String(), skuid, num, int(skuMsg.Price)*num, uid)
 	//do something
 	if err != nil {

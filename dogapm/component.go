@@ -30,7 +30,7 @@ func (e *EndPoint) Start() {
 		com.Start()
 	}
 	go func() {
-		//等待关闭信号
+		// wait for shutdown signal
 		quit := make(chan os.Signal)
 		signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 		<-quit

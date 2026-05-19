@@ -10,7 +10,7 @@ type log struct {
 }
 
 func init() {
-	//将打印的格式设置为json格式
+	// set log output format to JSON
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 }
 
